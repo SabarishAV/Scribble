@@ -12,8 +12,12 @@ const registerUser = asyncHandler(async (req,res)=>{
 
     const userAvailabe = await User.findOne({email})
     if(userAvailabe){
-        res.status(401).json({"message":"User already registered"})
-        throw new Error("User already registered")
+        res.status(401).json({"message":"Already registered with this email"})
+    }
+
+    const usernanmeExists = await User.findOne({username})
+    if(usernanmeExists){
+        res.status(403).json({message:"Username already taken"})
     }
 
     const hashedPassword = await bcrypt.hash(password,10);
@@ -36,6 +40,8 @@ const registerUser = asyncHandler(async (req,res)=>{
     // res.cookie('authToken', token, { httpOnly: true, secure: true, sameSite: 'strict' }); // Recommended
     // res.json({ message: 'Login successful' });
 })
+
+
 
 const loginUser = asyncHandler(async (req,res)=>{
     const { username,password } = req.body;
