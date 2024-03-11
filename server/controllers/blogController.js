@@ -10,7 +10,7 @@ const getAllBlogs = asyncHandler(async (req,res)=>{
     }
 
     res.status(200).json(blogs)
-    console.log((blogs));
+    // console.log((blogs));
 })
 
 
@@ -53,5 +53,44 @@ const createBlog = asyncHandler(async (req,res)=>{
 
 
 
+const updateBlog = asyncHandler(async (req,res)=>{
+    const id = req.params.id;
+    if(!id){
+        res.status(404).json({message:"id not found"})
+    }
 
-module.exports = { getAllBlogs,getOneBlog,createBlog }
+    const updatedBlog = {
+        title: req.body.title,
+        content: req.body.content,
+        author: req.cookies.username
+    }
+    if(!updatedBlog){
+        res.status(404).json({message:"All fields are mandatory"})
+    }
+
+    const blog = await Blog.findByIdAndUpdate(id, updatedBlog, { new: true });
+    if(!blog){
+        res.status(404).json({message:"Blog not found"})
+    }
+
+    res.status(201).json({message:"Blog updated successfully",updatedBlog})
+})
+
+const deleteBlog = asyncHandler(async (req,res)=>{
+    const id = req.params.id
+    if(!id){
+        res.status(404).json({message:"id not found"})
+    }
+
+    const deletedBlog = await Blog.findByIdAndDelete(id)
+    if(!deletedBlog){
+        res.status(400).json("An error occured")
+    }
+
+    res.status(201).json({message:"Blog deleted successfully",deletedBlog})
+})
+
+
+
+
+module.exports = { getAllBlogs,getOneBlog,createBlog,updateBlog,deleteBlog }

@@ -7,8 +7,8 @@ const { getAllBlogs,getOneBlog,createBlog,updateBlog,deleteBlog } = require("../
 router.get("/blogs",validateToken,getAllBlogs)
 router.get("/:id",validateToken,getOneBlog)
 router.post("/createBlog",validateToken,createBlog)
-// router.put("/:id",validateToken,updateBlog)
-// router.delete("/:id",validateToken,deleteBlog)
+router.put("/:id",validateToken,updateBlog)
+router.delete("/:id",validateToken,deleteBlog)
 
 
 module.exports = router
