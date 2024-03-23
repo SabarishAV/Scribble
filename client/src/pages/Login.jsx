@@ -1,4 +1,28 @@
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
+
 function Login(){
+
+    const navigate = useNavigate()
+    let username,password
+
+    async function handleLogin(){
+        const url = import.meta.env.VITE_SERVER_URL 
+        const username = document.getElementById("username").value
+        const password = document.getElementById("password").value
+        const formData = {
+            username : username,
+            password : password
+        }
+        try{
+            const response = axios.post(`${url}/users/login`,formData)
+            navigate("/main")
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
+
     return <>
     <div className="flex justify-evenly items-center h-screen">
 
@@ -12,11 +36,11 @@ function Login(){
         <h1 className="pt-5 text-6xl font-bold">Login</h1>
         <div className="p-10">
         <label htmlFor="" className="font-bold">Username:</label> <br />
-        <input type="text" className="w-96 mb-9 focus:outline-none text-black rounded-sm pl-2" /> <br />
+        <input type="text" id="username" name="username" className="w-96 mb-9 focus:outline-none text-black rounded-sm pl-2" /> <br />
         <label htmlFor="" className="font-bold ">Password:</label> <br />
-        <input type="password" className="w-96 text-black focus:outline-none rounded-sm pl-2" />
+        <input type="password" id="password" name="password" className="w-96 text-black focus:outline-none rounded-sm pl-2" />
         </div>
-        <button className="bg-white text-purple-500 text-3xl p-3 rounded-md font-bold">Login</button>
+        <button className="bg-white text-purple-500 text-3xl p-3 rounded-md font-bold" onClick={handleLogin}>Login</button>
         <p className="pt-6">Don't have an account, <a href="/signup" className="text-black underline">signup</a></p>
     </div>
 
