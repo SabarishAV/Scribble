@@ -5,15 +5,15 @@ function Navbar() {
   <div className="flex items-center">
     <a href="/" className="text-xl font-bold font-mono">My Blog</a>
   </div>
-  <ul className="hidden md:flex space-x-4 font-mono">
+  <ul className="hidden md:flex space-x-7 font-mono">
     <li>
-      <a href="/" className="hover:text-gray-400">Home</a>
+      <a href="/main" className="hover:text-white">Home</a>
     </li>
     <li>
-      <a href="/about" className="hover:text-gray-400">About</a>
+      <a href="/about" className="hover:text-white">Your Blogs</a>
     </li>
     <li>
-      <a href="/contact" className="hover:text-gray-400">Contact</a>
+      <a href="/contact" className="hover:text-white">Contact</a>
     </li>
   </ul>
 </nav>
