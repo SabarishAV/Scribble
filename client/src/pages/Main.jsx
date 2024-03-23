@@ -3,6 +3,7 @@ import React from 'react'
 import Navbar from '../components/Navbar'
 import Slogan from '../components/Slogan'
 import AllPosts from '../components/AllPosts'
+import Footer from '../components/Footer'
 
 function Main() {
     return (
@@ -10,6 +11,7 @@ function Main() {
         <Navbar/>
         <Slogan/>
         <AllPosts/>
+        <Footer/>
       </div>
     )
   }

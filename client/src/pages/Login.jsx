@@ -1,10 +1,20 @@
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
+
 function Login(){
 
+    function setCookie(name, value) {
+        const date = new Date();
+        date.setTime(date.getTime() + 1 * 1 * 60 * 60 * 1000);
+        let expires = `expires=${date.toUTCString()}`;
+        document.cookie = `${name}=${value};${expires};path=/`;
+      }
+
+
+      
+      
     const navigate = useNavigate()
-    let username,password
 
     async function handleLogin(){
         const url = import.meta.env.VITE_SERVER_URL 
@@ -15,7 +25,9 @@ function Login(){
             password : password
         }
         try{
-            const response = axios.post(`${url}/users/login`,formData)
+            const response = await axios.post(`${url}/users/login`,formData)
+            console.log(response.data.message);
+            setCookie("authToken",response.data.token)
             navigate("/main")
         }
         catch(e){
