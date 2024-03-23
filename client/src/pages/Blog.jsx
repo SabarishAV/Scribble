@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import Auth from "../Auth"
 import Navbar from "../components/Navbar"
+import Footer from '../components/Footer'
 
 function Blog(){
     const docURL = document.URL
@@ -29,11 +30,18 @@ function Blog(){
     if(data){
         return <>
         <Navbar/>
-        <div className='w-screen bg-yellow-300 flex items-center justify-center'>
-            <div className='w-[40vw] bg-green-400'>
-            <h1>{data.title}</h1>
-            <p>{data.content}</p>
+        <div className='w-screen flex items-center justify-center py-5'>
+            <div className='w-[60vw]'>
+            <h1 className='text-4xl font-bold'>{data.title}</h1>
+            <p className='pt-10'>{data.content}</p>
+            <div className='p-3 mt-3'>
+                <button className='text-xl py-1 px-4 border-black border-solid border-2 rounded-md hover:bg-purple-500 hover:text-white hover:border-none hover:font-bold mx-3'>Edit</button>
+                <button className='text-xl py-1 px-4 border-black border-solid border-2 rounded-md hover:bg-purple-500 hover:text-white hover:border-none hover:font-bold mx-3'>Delete</button>
             </div>
+            </div>
+        </div>
+        <div className='absolute bottom-0'>
+        <Footer/>
         </div>
         </>
     }

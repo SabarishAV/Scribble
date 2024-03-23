@@ -28,7 +28,7 @@ function AllPosts(){
     // console.log(data);
 
     function goToBlog(item){
-        navigate(`/blog/:${item._id}`)
+        navigate(`/blog/${item._id}`)
         console.log("Hii");
     }
 
