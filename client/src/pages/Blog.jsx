@@ -32,6 +32,21 @@ function Blog(){
         navigate(`/blog/edit/${id}`);
     }
 
+    const handleDelete = async (id)=>{
+        const token = Auth()
+        const response = await axios.delete(`${url}/blog/${id}`,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        if(response){
+            console.log("User deleted");
+            navigate("/main")
+        }else{
+            console.log("Error occured");
+        }
+    }
+
     console.log(data);
     if(data){
         return <>
@@ -42,7 +57,7 @@ function Blog(){
             <p className='pt-10'>{data.content}</p>
             <div className='p-3 mt-3'>
                 <button className='text-xl py-1 px-4 border-black border-solid border-2 rounded-md hover:bg-purple-500 hover:text-white hover:border-none hover:font-bold mx-3' onClick={()=>{handleEdit(data._id)}}>Edit</button>
-                <button className='text-xl py-1 px-4 border-black border-solid border-2 rounded-md hover:bg-purple-500 hover:text-white hover:border-none hover:font-bold mx-3'>Delete</button>
+                <button className='text-xl py-1 px-4 border-black border-solid border-2 rounded-md hover:bg-purple-500 hover:text-white hover:border-none hover:font-bold mx-3' onClick={()=>{handleDelete(data._id)}}>Delete</button>
             </div>
             </div>
         </div>
