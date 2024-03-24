@@ -11,7 +11,9 @@ function Main() {
         <Navbar/>
         <Slogan/>
         <AllPosts/>
-        <Footer/>
+        <div className='absolute bottom-0'>
+          <Footer/>
+        </div>
       </div>
     )
   }

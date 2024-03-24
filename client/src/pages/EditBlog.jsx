@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react"
 import axios from "axios"
+import { useNavigate } from "react-router-dom"
 
 import Auth from '../Auth'
 import Navbar from "../components/Navbar"
@@ -10,10 +11,12 @@ function EditBlog(){
     const docURL = document.URL
     const id = docURL.split("/")[5]
     const url = import.meta.env.VITE_SERVER_URL
+    let formData
 
     const [data,setData] = useState()
     const [title,setTitle] = useState()
     const [content,setContent] = useState()
+    const navigate = useNavigate()
     // let title,content;
 
     useEffect(()=>{
@@ -28,6 +31,7 @@ function EditBlog(){
             if(data){
                 setTitle(data.title)
                 setContent(data.content)
+                setAuthor(data.author)
             }
         }
 
@@ -35,22 +39,42 @@ function EditBlog(){
     },[])
 
 
-    const handleEdit = ()=>{
+    const handleEdit = async ()=>{
         if(title || content){
             console.log(title,content);
             if(title==undefined){
                 setTitle(data.title)
+                formData = {
+                    content:content,
+                    author:data.author
+                }
             }
             else if(content==undefined){
                 setContent(data.content)
+                formData = {
+                    title:title,
+                    author:data.author
+                }
+            }else{
+                formData = {
+                    title:title,
+                    content:content,
+                    author:data.author
+                }
             }
 
-            const formData = {
-                title:title,
-                content:content
+            const token = Auth()
+            const response = await axios.put(`${url}/blog/${id}`,formData,{
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            if(response){
+                console.log("Blog updated successfully");
+                navigate("/main")
+            }else{
+                console.log("error");
             }
-            console.log(formData);
-
 
         }else{
             console.log("Please edit");

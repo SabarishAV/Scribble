@@ -59,11 +59,26 @@ const updateBlog = asyncHandler(async (req,res)=>{
         res.status(404).json({message:"id not found"})
     }
 
-    const updatedBlog = {
-        title: req.body.title,
-        content: req.body.content,
-        author: req.cookies.username
+    let updatedBlog
+
+    if(!req.body.title){
+        updatedBlog = {
+            content: req.body.content,
+            author: req.body.author
+        }
+    }else if(!req.body.content){
+        updatedBlog = {
+            title: req.body.title,
+            author: req.body.author
+        }
+    }else{
+        updatedBlog = {
+            title: req.body.title,
+            content:req.body.content,
+            author: req.body.author
+        }
     }
+
     if(!updatedBlog){
         res.status(404).json({message:"All fields are mandatory"})
     }

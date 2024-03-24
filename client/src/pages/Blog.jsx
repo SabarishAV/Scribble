@@ -41,7 +41,7 @@ function Blog(){
             <h1 className='text-4xl font-bold'>{data.title}</h1>
             <p className='pt-10'>{data.content}</p>
             <div className='p-3 mt-3'>
-                <button className='text-xl py-1 px-4 border-black border-solid border-2 rounded-md hover:bg-purple-500 hover:text-white hover:border-none hover:font-bold mx-3' onClick={handleEdit(data._id)}>Edit</button>
+                <button className='text-xl py-1 px-4 border-black border-solid border-2 rounded-md hover:bg-purple-500 hover:text-white hover:border-none hover:font-bold mx-3' onClick={()=>{handleEdit(data._id)}}>Edit</button>
                 <button className='text-xl py-1 px-4 border-black border-solid border-2 rounded-md hover:bg-purple-500 hover:text-white hover:border-none hover:font-bold mx-3'>Delete</button>
             </div>
             </div>
