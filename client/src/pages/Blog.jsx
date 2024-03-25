@@ -50,6 +50,8 @@ function Blog(){
     console.log(data);
     if(data){
         return <>
+        <div className='min-h-[100vh] flex flex-col justify-between'>
+        <div>
         <Navbar/>
         <div className='w-screen flex items-center justify-center py-5'>
             <div className='w-[60vw]'>
@@ -61,8 +63,10 @@ function Blog(){
             </div>
             </div>
         </div>
-        <div className='absolute bottom-0'>
+        </div>
+        <div>
         <Footer/>
+        </div>
         </div>
         </>
     }

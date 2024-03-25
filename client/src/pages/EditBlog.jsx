@@ -83,6 +83,8 @@ function EditBlog(){
 
     if(data){
         return <>
+        <div className="min-h-[100vh] flex flex-col justify-between">
+        <div>
         <Navbar/>
             <div className="w-screen flex justify-center items-center flex-col py-10">
                 <div className="flex flex-col justify-center items-start w-[50vw]">
@@ -102,9 +104,11 @@ function EditBlog(){
                 </div>
                 
             </div>
-            <div className="absolute bottom-0">
+        </div>
+            <div>
                 <Footer/>
             </div>
+        </div>
         </>
     }
 }
