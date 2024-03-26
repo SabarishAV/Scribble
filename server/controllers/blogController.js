@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler")
+const bcrypt = require("bcrypt")
 
 const Blog = require("../models/blogSchema")
 
@@ -32,15 +33,19 @@ const getOneBlog = asyncHandler(async(req,res)=>{
 
 
 const createBlog = asyncHandler(async (req,res)=>{
-    const {title,content} = req.body
+    const {title,content,author,username} = req.body
     if(!title || !content){
         res.status(400).json({message:"All fields are mandatory"})
     }
     const blog = new Blog({
         title,
         content,
-        author:req.cookies.username
+        author:username
     })
+    isUserValid = await bcrypt.compare(username,author)
+    if(!isUserValid){
+        res.status(400).json({message:"User invalid"})
+    }
     await blog.save()
 
     if(!blog){

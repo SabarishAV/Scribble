@@ -28,6 +28,8 @@ function Login(){
             const response = await axios.post(`${url}/users/login`,formData)
             console.log(response.data.message);
             setCookie("authToken",response.data.token)
+            setCookie("author",response.data.author)
+            setCookie("username",username)
             navigate("/main")
         }
         catch(e){

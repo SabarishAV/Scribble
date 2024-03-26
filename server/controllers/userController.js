@@ -68,9 +68,10 @@ const loginUser = asyncHandler(async (req,res)=>{
     const payload = { "id":`${userAvailable._id}`, "username":`${userAvailable.username}` };
     const secret = process.env.JWT_SECRET;
     const token = jwt.sign(payload, secret, {expiresIn:"30m"});
-    res.cookie('authToken', token, { httpOnly: true, secure: true, sameSite: 'strict' }); // Recommended
-    res.cookie('username', payload.username, { httpOnly: true, secure: true, sameSite: 'strict' }); // Recommended
-    res.json({ message: 'Login successful', token:token });
+    const author = await bcrypt.hash(userAvailable.username,10)
+    res.cookie('authToken', token, { httpOnly: true, secure: true, sameSite: 'strict' });
+    res.cookie('username', payload.username, { httpOnly: true, secure: true, sameSite: 'strict' });
+    res.json({ message: 'Login successful', token:token,author:author });
 
 })
 

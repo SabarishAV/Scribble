@@ -4,6 +4,7 @@ const asyncHandler = require("express-async-handler")
 const validateToken = asyncHandler(async (req,res,next)=>{
     // const token = req.cookies.authToken;
     const authHeader = req.headers.authorization;
+    // console.log(authHeader2);
     const token = authHeader && authHeader.split(' ')[1];
 
     if(!token){
