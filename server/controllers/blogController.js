@@ -121,6 +121,16 @@ const deleteBlog = asyncHandler(async (req,res)=>{
 })
 
 
+const getMyBlog = asyncHandler(async (req,res)=>{
+    let author = req.params.author
+    const blogs = await Blog.find({author});
+    if(!blogs){
+        res.status(400).json({message:"No blogs available"})
+    }
+    res.status(200).json(blogs)
+})
 
 
-module.exports = { getAllBlogs,getOneBlog,createBlog,updateBlog,deleteBlog }
+
+
+module.exports = { getAllBlogs,getOneBlog,createBlog,updateBlog,deleteBlog,getMyBlog }
