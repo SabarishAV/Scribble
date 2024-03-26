@@ -3,6 +3,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom"
 
 import Auth from '../Auth'
+import Author from "../Author"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 
@@ -12,15 +13,29 @@ function EditBlog(){
     const id = docURL.split("/")[5]
     const url = import.meta.env.VITE_SERVER_URL
     let formData
+    const userName = Author("username")
+    const theAuthor = Author("author")
 
     const [data,setData] = useState()
     const [title,setTitle] = useState()
     const [content,setContent] = useState()
+    const [author,setAuthor] = useState()
     const navigate = useNavigate()
     // let title,content;
 
     useEffect(()=>{
+        
         const fetchBlog = async ()=>{
+
+            try{
+                const theAuthor = Author("author")
+                const username = Author("username")
+                const isAuthorized = await axios.post(`${url}/users/auth`,{author:theAuthor,username})
+            }
+            catch{
+                navigate("/")
+            }
+
             const token = Auth()
             const response = await axios.get(`${url}/blog/${id}`,{
                 headers: {
@@ -41,27 +56,31 @@ function EditBlog(){
 
     const handleEdit = async ()=>{
         if(title || content){
-            console.log(title,content);
+            // console.log(title,content);
             if(title==undefined){
                 setTitle(data.title)
                 formData = {
                     content:content,
-                    author:data.author
+                    author:theAuthor,
+                    username:userName
                 }
             }
             else if(content==undefined){
                 setContent(data.content)
                 formData = {
                     title:title,
-                    author:data.author
+                    author:theAuthor,
+                    username:userName
                 }
             }else{
                 formData = {
                     title:title,
                     content:content,
-                    author:data.author
+                    author:theAuthor,
+                    username:userName
                 }
             }
+            // console.log(formData);
 
             const token = Auth()
             const response = await axios.put(`${url}/blog/${id}`,formData,{
@@ -89,12 +108,12 @@ function EditBlog(){
             <div className="w-screen flex justify-center items-center flex-col py-10">
                 <div className="flex flex-col justify-center items-start w-[50vw]">
                     <label htmlFor="title" className="font-black text-2xl">Title</label>
-                    <textarea type="text" id="title" name="title" className="border-solid border-2 border-black w-[80%]" defaultValue={data.title} onChange={(e)=>{setTitle(e.target.value); console.log(title)}}/>
+                    <textarea type="text" id="title" name="title" className="border-solid border-2 border-black w-[80%]" defaultValue={data.title} onChange={(e)=>{setTitle(e.target.value)}}/>
                 </div>
 
                 <div className="flex flex-col justify-center items-start w-[50vw] pt-6">
                     <label htmlFor="content" className="font-black text-2xl">Content</label>
-                    <textarea type="text" id="content" name="content" className="border-solid border-2 border-black w-[80%]" defaultValue={data.content} onChange={(e)=>{setContent(e.target.value); console.log(content);}}/>
+                    <textarea type="text" id="content" name="content" className="border-solid border-2 border-black w-[80%]" defaultValue={data.content} onChange={(e)=>{setContent(e.target.value)}}/>
                 </div>
 
                 <div className="flex flex-col justify-center items-start w-[50vw] pt-12">

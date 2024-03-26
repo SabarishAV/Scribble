@@ -75,5 +75,15 @@ const loginUser = asyncHandler(async (req,res)=>{
 
 })
 
+const authUser = asyncHandler(async (req,res)=>{
+    const { username,author } = req.body
+    const isAuthorized = await bcrypt.compare(username,author)
+    const userAvailabe = await User.findOne({username})
+    if(!isAuthorized || !userAvailabe){
+        res.status(400).json({message:"User not authorized"})
+    }
+    res.status(200).json({message:isAuthorized})
+})
 
-module.exports = { registerUser,loginUser }
+
+module.exports = { registerUser,loginUser,authUser }

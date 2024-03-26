@@ -69,18 +69,21 @@ const updateBlog = asyncHandler(async (req,res)=>{
     if(!req.body.title){
         updatedBlog = {
             content: req.body.content,
-            author: req.body.author
+            author: req.body.author,
+            username:req.body.username
         }
     }else if(!req.body.content){
         updatedBlog = {
             title: req.body.title,
-            author: req.body.author
+            author: req.body.author,
+            username:req.body.username
         }
     }else{
         updatedBlog = {
             title: req.body.title,
             content:req.body.content,
-            author: req.body.author
+            author: req.body.author,
+            username:req.body.username
         }
     }
 
@@ -88,6 +91,13 @@ const updateBlog = asyncHandler(async (req,res)=>{
         res.status(404).json({message:"All fields are mandatory"})
     }
 
+    let isUserValid = await bcrypt.compare(updatedBlog.username,updatedBlog.author)
+    if(!isUserValid){
+        console.log(updatedBlog.username,updatedBlog.author);
+        res.status(400).json({message:"User not valid"})
+    }
+
+    updatedBlog.author = updatedBlog.username
     const blog = await Blog.findByIdAndUpdate(id, updatedBlog, { new: true });
     if(!blog){
         res.status(404).json({message:"Blog not found"})
@@ -99,7 +109,7 @@ const updateBlog = asyncHandler(async (req,res)=>{
 const deleteBlog = asyncHandler(async (req,res)=>{
     const id = req.params.id
     if(!id){
-        res.status(404).json({message:"id not found"})
+        res.status(404).json({message:"Id not found"})
     }
 
     const deletedBlog = await Blog.findByIdAndDelete(id)

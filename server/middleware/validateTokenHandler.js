@@ -4,11 +4,11 @@ const asyncHandler = require("express-async-handler")
 const validateToken = asyncHandler(async (req,res,next)=>{
     // const token = req.cookies.authToken;
     const authHeader = req.headers.authorization;
-    // console.log(authHeader2);
+    // console.log(authHeader);
     const token = authHeader && authHeader.split(' ')[1];
 
     if(!token){
-        res.status(401).json({"message":"Not authorized"})
+        res.status(401).json({"message":"Not authorized x"})
     }
 
     const secretKey = process.env.JWT_SECRET
