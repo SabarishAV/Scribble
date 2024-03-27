@@ -6,6 +6,7 @@ import Auth from '../Auth'
 import Author from "../Author"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
+import MessageTemplate from "./MessageTemplate"
 
 function EditBlog(){
 
@@ -20,6 +21,7 @@ function EditBlog(){
     const [title,setTitle] = useState()
     const [content,setContent] = useState()
     const [author,setAuthor] = useState()
+    const [isBlogEdited,setIsBlogEdited] = useState(false)
     const navigate = useNavigate()
     // let title,content;
 
@@ -89,8 +91,11 @@ function EditBlog(){
                 }
             })
             if(response){
-                console.log("Blog updated successfully");
-                navigate("/main")
+                // console.log("Blog updated successfully");
+                setIsBlogEdited(true)
+                setTimeout(() => {
+                    navigate("/main")
+                }, 2000);
             }else{
                 console.log("error");
             }
@@ -102,6 +107,9 @@ function EditBlog(){
 
     if(data){
         return <>
+        {isBlogEdited?
+        <MessageTemplate message="Blog edited successfully!!"/>
+        :
         <div className="min-h-[100vh] flex flex-col justify-between">
         <div>
         <Navbar/>
@@ -127,7 +135,7 @@ function EditBlog(){
             <div>
                 <Footer/>
             </div>
-        </div>
+        </div>}
         </>
     }
 }

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import Author from "../Author"
 import Auth from "../Auth"
 import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
 
 const MyBlogs = ()=>{
 
@@ -41,10 +42,11 @@ const MyBlogs = ()=>{
         fetchPosts()
     },[])
 
-    console.log(data);
+    // console.log(data);
 
     if(data){
         return <>
+        <div className="min-h-[100vh] flex flex-col justify-between">
         <div>
             <Navbar/>
             <div className='flex items-start justify-around flex-col w-screen my-3'>
@@ -55,6 +57,10 @@ const MyBlogs = ()=>{
                 </div>
                ))}
             </div>
+        </div>
+        <div>
+            <Footer/>
+        </div>
         </div>
         </>
     }

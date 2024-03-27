@@ -51,8 +51,8 @@ const createBlog = asyncHandler(async (req,res)=>{
     if(!blog){
         res.status(400).json({message:"An error occured"})
     }
-
-    res.status(200).json(blog)
+    let message = "Blog created successfully!!"
+    res.status(200).json(message)
 })
 
 

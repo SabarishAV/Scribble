@@ -6,6 +6,7 @@ import Auth from "../Auth"
 import Author from "../Author"
 import Navbar from "../components/Navbar"
 import Footer from '../components/Footer'
+import MessageTemplate from './MessageTemplate';
 
 function Blog(){
     const docURL = document.URL
@@ -14,6 +15,7 @@ function Blog(){
     const username = Author("username")
     
     const [data,setData] = useState()
+    const [isBlogDeleted,setIsBlogDeleted] = useState(false);
     const navigate = useNavigate()
 
     useEffect(()=>{
@@ -52,7 +54,10 @@ function Blog(){
         })
         if(response){
             console.log("Blog deleted");
-            navigate("/main")
+            setIsBlogDeleted(true);
+            setTimeout(() => {
+                navigate("/main")
+            }, 2000);
         }else{
             console.log("Error occured");
         }
@@ -61,6 +66,9 @@ function Blog(){
     // console.log(data);
     if(data){
         return <>
+        {isBlogDeleted?
+        <MessageTemplate message="Blog deleted successfully!!"/>
+        :
         <div className='min-h-[100vh] flex flex-col justify-between'>
         <div>
         <Navbar/>
@@ -78,7 +86,7 @@ function Blog(){
         <div>
         <Footer/>
         </div>
-        </div>
+        </div>}
         </>
     }
 }

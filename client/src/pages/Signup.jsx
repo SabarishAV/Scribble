@@ -1,7 +1,12 @@
+import { useState } from "react";
 import axios from "axios"
 import { useNavigate } from 'react-router-dom';
+import MessageTemplate from "./MessageTemplate";
 
 function Signup(){
+
+    const [isSignedUp,setIsSignedUp] = useState(false)
+
     const navigate = useNavigate()
 
     let username,email,password
@@ -18,8 +23,11 @@ function Signup(){
             password:password
         }
         const register = await axios.post(`${url}/users/register`,formData)
-        console.log("Sign Up successfull");
-        navigate("/")
+        // console.log("Sign Up successfull");
+        setIsSignedUp(true)
+        setTimeout(() => {
+            navigate("/")
+        }, 2000);
         }
         catch(e){
             console.log(e);
@@ -27,6 +35,9 @@ function Signup(){
     }
 
     return <>
+    {isSignedUp?
+    <MessageTemplate message="User created successfully"/>
+    :
     <div className="flex justify-evenly items-center h-screen">
 
 <div className="h-2/3 w-1/3 rounded-lg flex flex-col items-center text-white pt-32">
@@ -45,13 +56,13 @@ function Signup(){
     <label htmlFor="" className="font-bold ">Password:</label> <br />
     <input type="password" id="password" name="password" className="w-96 text-black focus:outline-none rounded-sm pl-2" />
     </div>
-    <button className="bg-white text-purple-500 text-3xl p-3 rounded-md font-bold" onClick={HandleSignUp}>Sign Up</button>
+    <button className="bg-white text-purple-500 text-3xl p-3 rounded-md font-bold" onClick={()=>{HandleSignUp()}}>Sign Up</button>
     <p className="pt-6">Don't have an account, <a href="/" className="text-black underline">login</a></p>
 </div>
 
 
 
-</div>
+</div>}
     </>
 }
 
