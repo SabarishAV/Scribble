@@ -33,7 +33,7 @@ function Login(){
         }
         try{
             const response = await axios.post(`${url}/users/login`,formData)
-            // console.log(response.data.message);
+            // console.log(response);
             setCookie("authToken",response.data.token)
             setCookie("author",response.data.author)
             setCookie("username",username)
@@ -43,7 +43,7 @@ function Login(){
             }, 2000);
         }
         catch(e){
-            console.log(e);
+            console.log(response);
             if(e.response.data.message==="User not found"){
                 setUsernameError("User not found")
             }
