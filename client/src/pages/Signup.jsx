@@ -6,6 +6,9 @@ import MessageTemplate from "./MessageTemplate";
 function Signup(){
 
     const [isSignedUp,setIsSignedUp] = useState(false)
+    const [usernameError,setUsernameError] = useState()
+    const [commonError,setCommonError] = useState()
+    const [emailError,setEmailError] = useState()
 
     const navigate = useNavigate()
 
@@ -30,7 +33,16 @@ function Signup(){
         }, 2000);
         }
         catch(e){
-            console.log(e);
+            console.log(e.response.data.message);
+            if(e.response.data.message==="Username already taken"){
+                setUsernameError("Username already exists")
+            }
+            if(e.response.data.message==="All fields are mandatory"){
+                setCommonError("All fields are mandatory")
+            }
+            if(e.response.data.message==="Already registered with this email"){
+                setEmailError("Already registered with this email")
+            }
         }
     }
 
@@ -49,14 +61,24 @@ function Signup(){
 <div className="bg-purple-500 h-2/3 w-1/3 rounded-lg flex flex-col items-center text-white">
     <h1 className="pt-5 text-6xl font-bold">Sign Up</h1>
     <div className="p-10">
+    <div className="mb-9 relative">
     <label htmlFor="" className="font-bold">Username:</label> <br />
-    <input type="text" id="username" name="username" className="w-96 mb-9 focus:outline-none text-black rounded-sm pl-2" /> <br />
-    <label htmlFor="" className="font-bold">Email:</label> <br />
-    <input type="email" id="email" name="email" className="w-96 mb-9 focus:outline-none text-black rounded-sm pl-2" /> <br />
-    <label htmlFor="" className="font-bold ">Password:</label> <br />
-    <input type="password" id="password" name="password" className="w-96 text-black focus:outline-none rounded-sm pl-2" />
+    <input type="text" id="username" name="username" className="font-semibold w-96 focus:outline-none text-black rounded-sm pl-2" onChange={()=>{setUsernameError("")}}/> <br />
+    <p className="font-semibold text-red-600 absolute">{usernameError}</p>
     </div>
-    <button className="bg-white text-purple-500 text-3xl p-3 rounded-md font-bold" onClick={()=>{HandleSignUp()}}>Sign Up</button>
+    <div className="relative mb-9">
+    <label htmlFor="" className="font-bold">Email:</label> <br />
+    <input type="email" id="email" name="email" className="font-semibold w-96 focus:outline-none text-black rounded-sm pl-2" onChange={()=>{setEmailError("")}}/>
+    <p className="absolute font-semibold text-center text-red-600">{emailError}</p>
+    </div>
+     
+    <label htmlFor="" className="font-bold ">Password:</label> <br />
+    <input type="password" id="password" name="password" className="font-semibold w-96 text-black focus:outline-none rounded-sm pl-2" />
+    <div className="w-[100%] flex justify-center">
+    <p className="absolute font-semibold text-center text-red-600">{commonError}</p>
+    </div>
+    </div>
+    <button className="bg-white text-purple-500 text-3xl p-3 rounded-md font-bold" onClick={()=>{HandleSignUp(); setCommonError("")}}>Sign Up</button>
     <p className="pt-6">Don't have an account, <a href="/" className="text-black underline">login</a></p>
 </div>
 

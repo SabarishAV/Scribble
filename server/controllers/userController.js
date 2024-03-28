@@ -13,11 +13,13 @@ const registerUser = asyncHandler(async (req,res)=>{
     const userAvailabe = await User.findOne({email})
     if(userAvailabe){
         res.status(401).json({"message":"Already registered with this email"})
+        throw new Error("Already registered with this email")
     }
 
     const usernanmeExists = await User.findOne({username})
     if(usernanmeExists){
         res.status(403).json({message:"Username already taken"})
+        throw new Error("Username already taken")
     }
 
     const hashedPassword = await bcrypt.hash(password,10);
@@ -53,7 +55,7 @@ const loginUser = asyncHandler(async (req,res)=>{
 
     const userAvailable = await User.findOne({username})
     if(!userAvailable){
-        res.status(404)
+        res.status(404).json({"message":"User not found"})
         throw new Error("User not found")
     }
 

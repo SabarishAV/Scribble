@@ -22,6 +22,7 @@ function EditBlog(){
     const [content,setContent] = useState()
     const [author,setAuthor] = useState()
     const [isBlogEdited,setIsBlogEdited] = useState(false)
+    const [commonError,setCommonError] = useState()
     const navigate = useNavigate()
     // let title,content;
 
@@ -101,7 +102,8 @@ function EditBlog(){
             }
 
         }else{
-            console.log("Please edit");
+            // console.log("Please edit");
+            setCommonError("Please make any changes")
         }
     }
 
@@ -125,7 +127,8 @@ function EditBlog(){
                 </div>
 
                 <div className="flex flex-col justify-center items-start w-[50vw] pt-12">
-                    <div className="w-[80%] flex justify-center items-center">
+                    <div className="w-[80%] flex justify-center items-center flex-col">
+                        <p className="pb-3 text-red-600 font-semibold">{commonError}</p>
                         <button className="bg-purple-500 py-2 px-4 font-bold text-white text-xl rounded-md hover:text-black hover:bg-purple-600" onClick={handleEdit}>Submit</button>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { useNavigate } from 'react-router-dom'
 import MessageTemplate from './MessageTemplate';
 
@@ -7,6 +7,9 @@ import MessageTemplate from './MessageTemplate';
 function Login(){
 
     const [isLoggedIn,setIsLoggedIn] = useState(false)
+    const [usernameError,setUsernameError] = useState()
+    const [passwordError,setPasswordError] = useState()
+    const [commonError,setCommonError] = useState()
 
     function setCookie(name, value) {
         const date = new Date();
@@ -30,7 +33,7 @@ function Login(){
         }
         try{
             const response = await axios.post(`${url}/users/login`,formData)
-            console.log(response.data.message);
+            // console.log(response.data.message);
             setCookie("authToken",response.data.token)
             setCookie("author",response.data.author)
             setCookie("username",username)
@@ -41,6 +44,15 @@ function Login(){
         }
         catch(e){
             console.log(e);
+            if(e.response.data.message==="User not found"){
+                setUsernameError("User not found")
+            }
+            else if(e.response.data.message==="Incorect Password"){
+                setCommonError("Username and Password is not matching")
+            }
+            else if(e.code=="ERR_BAD_REQUEST"){
+                setCommonError("All fields are mandatory")
+            }
         }
     }
 
@@ -60,11 +72,14 @@ function Login(){
        <h1 className="pt-5 text-6xl font-bold">Login</h1>
        <div className="p-10">
        <label htmlFor="username" className="font-bold">Username:</label> <br />
-       <input type="text" id="username" name="username" className="w-96 mb-9 focus:outline-none text-black rounded-sm pl-2" /> <br />
+       <input type="text" id="username" name="username" className="font-semibold w-96 focus:outline-none text-black rounded-sm pl-2" onChange={()=>{setUsernameError("")}} autoComplete='true'/> <br />
+       <p id='username-error' className='mb-9 text-sm font-semibold text-red-600'>{usernameError}</p>
        <label htmlFor="password" className="font-bold ">Password:</label> <br />
-       <input type="password" id="password" name="password" className="w-96 text-black focus:outline-none rounded-sm pl-2" />
+       <input type="password" id="password" name="password" className="font-semibold w-96 text-black focus:outline-none rounded-sm pl-2" onChange={()=>{setPasswordError("")}}/>
+       <p id='password-error' className='font-semibold text-red-600 text-sm'>{passwordError}</p>
        </div>
-       <button className="bg-white text-purple-500 text-3xl p-3 rounded-md font-bold" onClick={()=>{handleLogin()}}>Login</button>
+       <button className="bg-white text-purple-500 text-3xl p-3 rounded-md font-bold" onClick={()=>{handleLogin(); setCommonError("")}}>Login</button>
+       <p className='pt-3 text-sm text-red-600 font-semibold'>{commonError}</p>
        <p className="pt-6">Don't have an account, <a href="/signup" className="text-black underline">signup</a></p>
    </div>
 

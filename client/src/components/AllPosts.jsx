@@ -23,13 +23,17 @@ function AllPosts(){
             setData(response.data)
         }
 
+ 
+
         fetchPosts()
     },[])
     // console.log(data);
+    
 
     function goToBlog(item){
         navigate(`/blog/${item._id}`)
     }
+
 
    if(data){
     return <>

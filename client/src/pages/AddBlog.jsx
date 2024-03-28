@@ -20,10 +20,13 @@ function AddBlog(){
     const [title,setTitle] = useState()
     const [content,setContent] = useState()
     const [isBlogCreated,setIsBlogCreated] = useState(false);
+    const [commonError,setCommonError] = useState()
 
     async function handleSubmit(){
+        setCommonError("")
         if(!title || !content){
-            console.log("All fields are mandatory");
+            // console.log("All fields are mandatory");
+            setCommonError("All fields are mandatory")
             return
         }
         const formData = {
@@ -76,7 +79,8 @@ function AddBlog(){
             <textarea onChange={(e)=>{resizeContent(); setContent(e.target.value)}} className="w-[100%] border-black border-2 mt-2 min-h-14 p-1" name="content" id="content"></textarea>
         </div>
 
-        <div className="w-screen flex justify-center items-center p-5">
+        <div className="w-screen flex flex-col justify-center items-center p-5">
+            <p className="pb-3 text-red-600 font-semibold">{commonError}</p>
             <button className="border-2 border-black py-2 px-4 text-2xl font-bold rounded-md hover:text-white hover:bg-purple-500 hover:border-transparent" onClick={()=>{handleSubmit()}}>Submit</button>
         </div>
     </div>

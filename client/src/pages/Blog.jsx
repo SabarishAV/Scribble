@@ -53,7 +53,7 @@ function Blog(){
             }
         })
         if(response){
-            console.log("Blog deleted");
+            // console.log("Blog deleted");
             setIsBlogDeleted(true);
             setTimeout(() => {
                 navigate("/main")
