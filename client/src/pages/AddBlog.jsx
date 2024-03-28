@@ -60,7 +60,7 @@ function AddBlog(){
 
     return <>
     {isBlogCreated?
-    <MessageTemplate message="User created successfully!!"/>
+    <MessageTemplate message="Blog created successfully!!"/>
     :
     <div className="overflow-x-hidden flex justify-between items-center flex-col min-h-[100vh]">
     <div>

@@ -57,7 +57,7 @@ const loginUser = asyncHandler(async (req,res)=>{
         throw new Error("User not found")
     }
 
-    if(bcrypt.compare(userAvailable.password,password)){
+    if(await bcrypt.compare(password,userAvailable.password)){
         // res.status(200).json({message:"Successfully logged in"})
         console.log("Successfully logged in");
     }else{
@@ -86,4 +86,34 @@ const authUser = asyncHandler(async (req,res)=>{
 })
 
 
-module.exports = { registerUser,loginUser,authUser }
+const changePassword = asyncHandler(async (req,res)=>{
+    const { username,currentPassword,newPassword } = req.body
+    if(!username || !currentPassword || !newPassword){
+        res.status(404).json({message:"All fields mandatory"})
+        throw new Error("All fields mandatory")
+    }
+
+    const userAvailable = await User.findOne({username})
+    if(!userAvailable){
+        res.status(400).json({message:"User not found"})
+        throw new Error("User not found")
+    }
+
+    const passwordCheck = await bcrypt.compare(currentPassword,userAvailable.password)
+    if(!passwordCheck){
+        res.status(403).json({message:"Wrong Password"})
+        throw new Error("Wrong password")
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword,10)
+    userAvailable.password=hashedNewPassword
+    const isPasswordUpdated = await userAvailable.save()
+    if(!isPasswordUpdated){
+        res.status(400).json({message:"Server error"})
+        throw new Error("Server error")
+    }
+    res.status(200).json({message:"Password updated successfully"})
+})
+
+
+module.exports = { registerUser,loginUser,authUser,changePassword }

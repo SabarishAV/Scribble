@@ -9,6 +9,7 @@ import Blog from './pages/Blog'
 import EditBlog from './pages/EditBlog';
 import AddBlog from './pages/AddBlog';
 import MyBlogs from './pages/MyBlogs';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
       <Route path="/blog/edit/:id" element={<EditBlog />} />
       <Route path="/blog/addblog" element={<AddBlog />} />
       <Route path="/blog/myblogs" element={<MyBlogs />} />
+      <Route path='/profile' element={<Profile/>}/>
     </Routes>
     </>
   )

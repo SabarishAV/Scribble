@@ -13,7 +13,7 @@ function Navbar() {
       <a href="/blog/myblogs" className="hover:text-white">Your Blogs</a>
     </li>
     <li>
-      <a href="/contact" className="hover:text-white">Contact</a>
+      <a href="/profile" className="hover:text-white">Profile</a>
     </li>
   </ul>
 </nav>
