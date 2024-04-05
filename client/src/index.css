@@ -21,3 +21,25 @@
       transform: translateY(0);
     }
   }
+  @media only screen and (max-width: 600px) {
+    #container-div{
+      flex-direction: column;
+      height: 100%;
+    }
+    #text-container{
+      width: 100%;
+      padding-top: 2rem;
+    }
+    #form-container{
+      width: 90%;
+      margin-top: 5rem;
+      padding-bottom: 1rem;
+    }
+    #form-inner-container{
+      width: 90%;
+      padding-inline: 0;
+    }
+    #form-inner-container input{
+      width: 100%;
+    }
+  }
