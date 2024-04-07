@@ -1,3 +1,3 @@
 # Blog-App--MERN
 
-Hosted Link: https://myblog-3.netlify.app/
+Hosted Link: https://scribble1.netlify.app/
