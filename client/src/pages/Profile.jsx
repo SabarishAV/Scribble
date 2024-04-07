@@ -21,6 +21,8 @@ function Profile(){
     const navigate = useNavigate()
     const url = import.meta.env.VITE_SERVER_URL
 
+    const [messageOption,setMessageOption] = useState()
+
     useEffect(()=>{
         async function authorize(){
             try{
@@ -72,6 +74,8 @@ function Profile(){
             return
         }
 
+        // messageOption = "Password updated successfully"
+        setMessageOption("Password updated successfully")
         setIsPasswordChanged(true)
         // console.log("Password updated successfully!!");
         setTimeout(()=>{
@@ -79,9 +83,19 @@ function Profile(){
         },2000)
     }
 
+    function logOut(){
+        document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        // messageOption = "Logged out successfully"
+        setMessageOption("Log out")
+        setIsPasswordChanged(true)
+        setTimeout(()=>{
+            navigate("/main")
+        },2000)
+    }
+
     return <>
     {isPasswordChanged?
-    <MessageTemplate message="Password updated successfully"/>
+    <MessageTemplate message={messageOption}/>
     :
     <div className="flex min-h-[100vh] justify-between flex-col">
     <div>
@@ -100,6 +114,7 @@ function Profile(){
                     </div>
                     <button className="m-auto border-black border-2 px-4 py-3 rounded-md text-lg font-semibold hover:text-white hover:border-transparent hover:bg-purple-500" onClick={()=>{changeDisplay("flex")}}>Change Password</button>
                 </div>
+                <button className=" mt-7 px-4 py-3 rounded-md text-lg font-bold bg-purple-500 text-white border-2 border-transparent hover:text-black hover:bg-white hover:border-black" onClick={()=>{logOut()}}>Log Out</button>
             </div>
             <div id="change-password" className="w-screen h-screen absolute hidden justify-center items-center">
                 <div className="relative flex flex-col justify-center items-center w-[30%] border-black border-2 rounded-md p-7 bg-purple-400">
