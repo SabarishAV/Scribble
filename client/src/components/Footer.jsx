@@ -1,6 +1,6 @@
 function Footer(){
     return <>
-    <div className="w-screen bg-purple-500">
+    <div className="w-[100%] bg-purple-500">
         <div>
             <ul className="flex justify-center items-center">
                 <li className="px-2"><a href="https://www.linkedin.com/in/sabarish-a-v-584225237" target="_blank"><i className="fa-brands fa-linkedin-in"></i></a></li>
