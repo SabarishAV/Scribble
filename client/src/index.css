@@ -42,4 +42,20 @@
     #form-inner-container input{
       width: 100%;
     }
+    #menu-btn{
+      display: block;
+    }
+    nav{
+      display: flex;
+      flex-direction: column;
+    }
+    #nav-links{
+      /* display: flex; */
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #nav-links li{
+      margin-left: 0;
+    }
   }

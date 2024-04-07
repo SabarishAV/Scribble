@@ -37,7 +37,7 @@ function AllPosts(){
 
    if(data){
     return <>
-    <div className='flex items-start justify-around flex-col w-screen my-3'>
+    <div className='flex items-start justify-around flex-col w-[100%] my-3'>
     {data.map((item) => (
                 <div key={item._id} className='my-2 p-2 mx-auto border-solid border-black border-2 w-[90vw] border-l-transparent border-r-transparent hover:cursor-pointer'  onClick={()=>{goToBlog(item)}}>
                     <p className='text-xs text-gray-400'>Author: {item.author}</p>
