@@ -17,6 +17,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use("/users",require("./routes/userRoutes"))
 app.use("/blog",require("./routes/blogRoutes"))
+app.use("/test",require("./routes/testRoutes"))
 
 let port = process.env.PORT || 3000;
 app.listen(port, ()=>{

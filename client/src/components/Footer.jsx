@@ -10,7 +10,7 @@ function Footer(){
             </ul>
         </div>
         <div className="flex justify-center items-center">
-            <p className="text-gray-600">Copyright &#169; 2024 My Blog. All Rights Reserved.</p>
+            <p className="text-gray-600">Copyright &#169; 2024 Scribble. All Rights Reserved.</p>
         </div>
     </div>
     </>

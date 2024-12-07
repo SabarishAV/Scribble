@@ -11,7 +11,6 @@ const getAllBlogs = asyncHandler(async (req,res)=>{
     }
 
     res.status(200).json(blogs)
-    // console.log((blogs));
 })
 
 
